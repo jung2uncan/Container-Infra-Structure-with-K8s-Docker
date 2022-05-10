@@ -1,0 +1,22 @@
+# 현재 파일이 루비(ruby)임을 인식하게 하는 호환 코드로, ft는 파일 종류(file type)의 약자이다.
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|            		#"2"는 베이그런트에서 루비로 코드를 읽어 들여 실행 할 때 작동하는 API 버전이고, do |config|는 베이그런트 설정의 시작을 알림
+	config.vm.define "m-k8s" do |cfg|           	#virtualBox에서 보이는 가상 머신을 "m-k8s"로 정의하고, do |cfg|를 추가해 원하는 설정으로 변경
+		cfg.vm.box = "sysnet4admin/CentOS-k8s"  	#기본값 config.vm.box를 do |cfg|에 적용한 내용을 받아 cfg.vm.box로 변경
+		cfg.vm.provider "virtualbox" do |vb|      	#베이그런트의 프로바이더(Provider)가 Virtualbox를 정의함. 다음으로, Virtualbox에서 필요한 설정을 정의함 (do |vb|)
+			vb.name = "m-k8s(github_SysNet4Admin)"  #Virtualbox에 생성한 가상 머신의 이름/CPU 수/메모리 크기/소속 그룹 명시
+			vb.cpus = 2
+			vb.memory = 2048
+			vb.customize ["modifyvm", :id, "--groups", "/k8s-SM(github-SysNet4Admin)"]
+		end
+		cfg.vm.host_name = "m-k8s"                	#가상 머신 자체에 대한 설정. do |cfg|에 속한 작업으로 해당 라인은 host 명 설정
+		cfg.vm.network "private_network", ip:"192.168.1.10"  #호스트 전용 네트워크를 provate_network로 설정하여 eth1 인터페이스를 호스트 전용(Host-Only)으로 구성함. (IP는 192.168.1.10)
+		cfg.vm.network "forwarded_port", guest: 22, host: 60010, auto_correct: true, id: "ssh"  #ssh 통신은 호스트 60010번을 게스트 22번으로 전달되도록 구성. (포트 중복을 대비하여 auto_correct : true로 설정해서 포트가 중복되면 포트가 자동으로 변경되도록 함)
+		cfg.vm.synced_folder "../data", "/vagrant", disabled: true  #호스트와 게스트(가상머신) 사이에 디렉토리 동기화가 이뤄지지 않게 설정함.
+		cfg.vm.provision "shell", path: "install_pkg.sh" #경로(path)에 있는 install_pkg를 게스트(CentOS)내부에서 호출하여 실행하도록 함.
+	end
+end
+
+#프로바이더란? 베이그런트를 통해 제공되는 코드가 실제로 가상 머신으로 배포되게 하는 소프트 웨어

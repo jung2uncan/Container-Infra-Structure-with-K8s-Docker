@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # vim configuration
-echo 'alias-vi=vim' >> /etc/profile #vi를 호출하면 vim을 호출하도록 프로파일에 입력
+echo 'alias vi=vim' >> /etc/profile #vi를 호출하면 vim을 호출하도록 프로파일에 입력
 
 # kubeadm으로 쿠버네티스 설치를 위한 사전 조건을 설정하는 스크립트 파일
 
 # swapoff -a to disable swapping (쿠버네티스의 설치 요구 조건을 맞추기 위해 스왑되지 않도록 설정)
 swapoff -a
 # sef to comment the swap partition in /etc/fstab (시스템이 다시 시작되도라도 스왑되지 않도록 설정)
-sed -i.bak -r 's/(.+swap .+)/#\1/' etc/fstab
+sed -i.bak -r 's/(.+ swap .+)/#\1/' /etc/fstab
 
 gg_pkg="packages.cloud.google.com/yum/doc"
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo #쿠버네티스를 내려 받을 레파지토리를 설정하는 구문
@@ -29,7 +29,7 @@ cat <<EOF >  /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
-modprobe br_netfilter # 해당 커널 도뮬을 사용하여 브리지로 네트워크를 구성함.
+modprobe br_netfilter # 해당 커널 모듈을 사용하여 브리지로 네트워크를 구성함.
 
 # local small dns & vagrant cannot parse and delivery shell code.
 echo "192.168.1.10 m-k8s" >> /etc/hosts

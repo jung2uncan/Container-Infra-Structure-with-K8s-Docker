@@ -1,0 +1,19 @@
+apiVersion: apps/v1 #API 버전
+kind: Deployment    #오브젝트 종류
+metadata:
+  name: echo-hname
+  labels:
+    app: nginx
+spec:
+  replicas: 3 #몇 개의 pod를 생성할 건지 결정
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: echo-hname
+        image: sysnet4admin/echo-hname #사용되는 이미지

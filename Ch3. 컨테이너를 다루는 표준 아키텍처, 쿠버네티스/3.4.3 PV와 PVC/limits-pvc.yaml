@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: storagelimits
+spec:
+  limits:
+  - type: PersistentVolumeClaim
+    max:
+      storage: 5Mi  #최대 요청 가능 용량
+    min:
+      storage: 1Mi  #최소 요청 가능 용량

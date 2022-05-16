@@ -7,4 +7,4 @@ spec:
     app: nfs-pvc-sts
   ports:
     - port: 80
-  clusterIP: None
+  clusterIP: None # 헤드리스(Headless) 서비스. 즉, IP를 가지지 않는 서비스 타입 (IP자원을 아낄 수 있음) 

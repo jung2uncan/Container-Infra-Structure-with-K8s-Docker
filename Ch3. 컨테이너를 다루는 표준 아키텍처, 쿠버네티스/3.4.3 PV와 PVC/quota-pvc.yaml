@@ -1,0 +1,9 @@
+# 총 누적 사용량 제한 위함
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: storagequota
+spec:
+  hard:
+    persistentvolumeclaims: "5" # PVC 5개까지 제한
+    requests.storage: "25Mi"    # 용량 25Mi가 넘지 않도록 제한

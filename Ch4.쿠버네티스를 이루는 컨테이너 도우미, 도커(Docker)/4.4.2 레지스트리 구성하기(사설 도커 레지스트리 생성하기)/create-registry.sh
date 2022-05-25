@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-certs=/etc/docker/certs.d/192.168.1.10:8443
+certs=/etc/docker/certs.d/192.168.1.10:8443  
 mkdir /registry-image
-mkdir /etc/docker/certs
+mkdir /etc/docker/certs # 레지스트르 서버의 인증서들을 보관함
 mkdir -p $certs
 openssl req -x509 -config $(dirname "$0")/tls.csr -nodes -newkey rsa:4096 \
 -keyout tls.key -out tls.crt -days 365 -extensions v3_req

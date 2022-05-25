@@ -1,0 +1,26 @@
+#내부에 존재하는 컨테이너 이미지를 사용하도록 deployment에 설정
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: failure2
+  name: failure2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: failure2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: failure2
+    spec:
+      containers:
+      - image: multistage-img
+        imagePullPolicy: Never # 외부에서 이미지를 가져오지 않고 호스트에 존재하는 이미지를 사용하게 함
+        name: multistage-img
+        resources: {}
+status: {}

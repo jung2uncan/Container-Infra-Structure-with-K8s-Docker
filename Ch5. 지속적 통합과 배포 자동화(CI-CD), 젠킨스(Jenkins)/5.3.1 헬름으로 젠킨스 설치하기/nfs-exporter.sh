@@ -4,7 +4,7 @@ if [ $# -eq 0 ]; then
 fi
 
 if [[ ! -d $nfsdir ]]; then
-  mkdir -p $nfsdir  #N FS용 디렉토리 생성
+  mkdir -p $nfsdir  # NFS용 디렉토리 생성
   echo "$nfsdir 192.168.1.0/24(rw,sync,no_root_squash)" >> /etc/exports
   if [[ $(systemctl is-enabled nfs) -eq "disabled" ]]; then # NFS 서비스로 생성
     systemctl enable nfs

@@ -1,4 +1,4 @@
-docker build -t 192.168.1.10:8443/echo-ip .
-docker push 192.168.1.10:8443/echo-ip
-kubectl create deployment fs-echo-ip --image=192.168.1.10:8443/echo-ip
-kubectl expose deployment fs-echo-ip --type=LoadBalancer --name=fs-echo-ip-svc --port=8080 --target-port=80
+docker build -t 192.168.1.10:8443/echo-ip . # Docker build / CI 작업
+docker push 192.168.1.10:8443/echo-ip       # Docker 이미지 저장 / CI 작업
+kubectl create deployment fs-echo-ip --image=192.168.1.10:8443/echo-ip  # Kubernetes Deployment 배포 / CD 작업
+kubectl expose deployment fs-echo-ip --type=LoadBalancer --name=fs-echo-ip-svc --port=8080 --target-port=80 # Kubernetes 서비스 노출 / CD 작업
